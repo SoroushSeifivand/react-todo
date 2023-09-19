@@ -33,7 +33,7 @@ function App() {
   const handleDone = (isDone, id) => {
     if (id) {
       console.log("before", isDone, id);
-      setIsDone(true);
+      setIsDone(!isDone);
       console.log("after", isDone, id);
     }
   };
