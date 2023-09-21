@@ -5,7 +5,6 @@ import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 function App() {
   const [inputValue, setInputValue] = useState("");
   const [todos, setTodos] = useState([]);
-  const [isDone, setIsDone] = useState(false);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -13,7 +12,7 @@ function App() {
   let newTodo = {
     id: todos.length + 1,
     input: inputValue,
-    isDone: isDone,
+    isDone: false,
   };
   const addTodo = () => {
     if (inputValue !== "") {
@@ -30,12 +29,12 @@ function App() {
       addTodo();
     }
   };
-  const handleDone = (isDone, id) => {
-    if (id) {
-      console.log("before", isDone, id);
-      setIsDone(!isDone);
-      console.log("after", isDone, id);
-    }
+  const handleDone = (id) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
+      )
+    );
   };
   return (
     <div className="  flex justify-center h-screen w-full bg-purple-950 flex-col items-center">
@@ -71,7 +70,7 @@ function App() {
               <span className="flex gap-3 pr-2 ">
                 <AiOutlineCheck
                   className="cursor-pointer hover:scale-125"
-                  onClick={() => handleDone(isDone, id)}
+                  onClick={() => handleDone(id)}
                 />
                 <AiOutlineClose
                   className="cursor-pointer hover:scale-125"
